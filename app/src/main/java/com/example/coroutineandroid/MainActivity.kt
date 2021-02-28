@@ -24,12 +24,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startProgress(v : View?) {
-        if (v == pencet){
-            for ( i in 1..100){
-                Thread.sleep(1000)
-                Log.i("PROGRESS BAR", i.toString())
-                progressBar.setProgress(i)
+        CoroutineScope(Dispatchers.IO).launch {
+            if (v == pencet){
+                for ( i in 1..100){
+                    Thread.sleep(1000)
+                    Log.i("PROGRESS BAR", i.toString())
+                    progressBar.setProgress(i)
 
+                }
             }
         }
     }
