@@ -11,30 +11,30 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.concurrent.thread
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     val maxProgress = 100
-    private lateinit var button: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         progressBar.max = maxProgress
-
+        pencet.setOnClickListener(this)
     }
 
-    fun startProgress(v : View?) {
-        CoroutineScope(Dispatchers.IO).launch {
-            if (v == pencet){
-                for ( i in 1..100){
-                    Thread.sleep(1000)
-                    Log.i("PROGRESS BAR", i.toString())
-                    progressBar.setProgress(i)
+    private fun startProgress() {
+        val progressThread = ProgressBar(this)
+        progressThread.execute()
+    }
 
-                }
-            }
+    override fun onClick(v: View?) {
+        when(v){
+            pencet -> startProgress()
         }
     }
 
+    fun notifyProgressBar(progress: Int){
+        progressBar.setProgress(progress)
+    }
 
 }
